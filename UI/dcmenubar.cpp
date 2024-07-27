@@ -1,19 +1,20 @@
 
 #include "dcmenubar.h"
 #include "ElaMenu.h"
+#include "ElaToolButton.h"
 #include <QAction>
 
 
 
-DCMenuBar::DCMenuBar(QWidget* parent, ProjectDock *project_dock, ClassDock *class_dock): ElaMenuBar(parent)
+DCMenuBar::DCMenuBar(QWidget* parent, const QList <ElaDockWidget*>& dockList): ElaMenuBar(parent)
 {
     auto *file = new ElaMenu(tr("File(&F)"),this);
         auto *new_ = file->addMenu(tr("New"));
             auto *newfile = new_->addElaIconAction(ElaIconType::FileCode, tr("File"));
-            auto *newproject = new_->addElaIconAction(ElaIconType::Backpack, tr("Project"));
+            auto *newproject = new_->addElaIconAction(ElaIconType::Book, tr("Project"));
         auto *open = file->addMenu(tr("Open"));
             auto *openfile = open->addElaIconAction(ElaIconType::FileCode, tr("File"), QKeySequence::Open);
-            auto *openproject = open->addElaIconAction(ElaIconType::Backpack, tr("Project"));
+            auto *openproject = open->addElaIconAction(ElaIconType::BookBookmark, tr("Project"));
         auto *save = file->addElaIconAction(ElaIconType::FileCheck, tr("Save"), QKeySequence::Save);
         auto *saveas = file->addElaIconAction(ElaIconType::FileCheck, tr("Save As..."), QKeySequence::SaveAs);
         auto *close = file->addElaIconAction(ElaIconType::X, tr("Close"), QKeySequence::Close);
@@ -45,13 +46,12 @@ DCMenuBar::DCMenuBar(QWidget* parent, ProjectDock *project_dock, ClassDock *clas
         edit->addSeparator();
 
     auto *view = new ElaMenu(tr("View(&V)"), this);
-        auto *pjview = project_dock->toggleViewAction();
-            pjview->setCheckable(true);
-        auto *clview = class_dock->toggleViewAction();
-            clview->setCheckable(true);
 
-    view->addAction(pjview);
-    view->addAction(clview);
+    for(const ElaDockWidget* dock : dockList){
+        auto *dockview = dock->toggleViewAction();
+        dockview->setCheckable(true);
+        view->addAction(dockview);
+    }
 
     addMenu(file);
     addMenu(edit);

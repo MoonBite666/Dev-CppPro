@@ -13,7 +13,7 @@ class DCMainWindow : public ElaWindow
 
 public:
     DCMainWindow(QWidget* parent = nullptr);
-    ~DCMainWindow();
+    ~DCMainWindow() = default;
 
 
 private:

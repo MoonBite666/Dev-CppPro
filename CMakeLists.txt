@@ -31,6 +31,12 @@ set(PROJECT_SOURCES
         UI/dw_classdock.h
         UI/dcmenubar.cpp
         UI/dcmenubar.h
+        UI/dceditor.cpp
+        UI/dceditor.h
+        UI/dcstatus.cpp
+        UI/dcstatus.h
+        UI/dw_tooldock.cpp
+        UI/dw_tooldock.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
