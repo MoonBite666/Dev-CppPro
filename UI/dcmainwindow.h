@@ -6,6 +6,7 @@
 #include <QMainWindow>
 
 
+
 class DCMainWindow : public ElaWindow
 {
     Q_OBJECT

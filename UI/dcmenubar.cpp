@@ -1,50 +1,60 @@
 
 #include "dcmenubar.h"
 #include "ElaMenu.h"
+#include <QAction>
 
-DCMenuBar::DCMenuBar(QWidget* parent): ElaMenuBar(parent)
+
+
+DCMenuBar::DCMenuBar(QWidget* parent, ProjectDock *project_dock, ClassDock *class_dock): ElaMenuBar(parent)
 {
-    auto *file = new ElaMenu(tr("File"),this);
-    auto *newfile = new ElaMenu(tr("New File"),file);
-    auto *newproject = new ElaMenu(tr("New Project"),file);
-    auto *openfile = new ElaMenu(tr("Open File"),file);
-    auto *openproject = new ElaMenu(tr("Open Project"),file);
-    auto *save = new ElaMenu(tr("Save"),file);
-    auto *saveas = new ElaMenu(tr("Save As"),file);
-    auto *exit = new ElaMenu(tr("Exit"),file);
-    file->addMenu(newfile);
-    file->addMenu(newproject);
-    file->addMenu(openfile);
-    file->addMenu(openproject);
-    file->addMenu(save);
-    file->addMenu(saveas);
-    file->addMenu(exit);
-    this->addMenu(file);
+    auto *file = new ElaMenu(tr("File(&F)"),this);
+        auto *new_ = file->addMenu(tr("New"));
+            auto *newfile = new_->addElaIconAction(ElaIconType::FileCode, tr("File"));
+            auto *newproject = new_->addElaIconAction(ElaIconType::Backpack, tr("Project"));
+        auto *open = file->addMenu(tr("Open"));
+            auto *openfile = open->addElaIconAction(ElaIconType::FileCode, tr("File"), QKeySequence::Open);
+            auto *openproject = open->addElaIconAction(ElaIconType::Backpack, tr("Project"));
+        auto *save = file->addElaIconAction(ElaIconType::FileCheck, tr("Save"), QKeySequence::Save);
+        auto *saveas = file->addElaIconAction(ElaIconType::FileCheck, tr("Save As..."), QKeySequence::SaveAs);
+        auto *close = file->addElaIconAction(ElaIconType::X, tr("Close"), QKeySequence::Close);
+        auto *closeall = file->addElaIconAction(ElaIconType::X, tr("Close All"));
+        auto *prefer = file->addElaIconAction(ElaIconType::Gear, tr("Preferences..."), QKeySequence::Preferences);
+        auto *quit = file->addElaIconAction(ElaIconType::PowerOff, tr("Quit"), QKeySequence::Quit);
 
-    auto *edit = new ElaMenu(tr("Edit"),this);
-    auto *undo = new ElaMenu(tr("Undo"),edit);
-    auto *redo = new ElaMenu(tr("Redo"),edit);
-    auto *cut = new ElaMenu(tr("Cut"),edit);
-    auto *copy = new ElaMenu(tr("Copy"),edit);
-    auto *paste = new ElaMenu(tr("Paste"),edit);
-    edit->addMenu(undo);
-    edit->addMenu(redo);
-    edit->addMenu(cut);
-    edit->addMenu(copy);
-    edit->addMenu(paste);
-    this->addMenu(edit);
+    // file->setContentsMargins(10,2,2,2);
+        file->addMenu(new_);
+        file->addMenu(open);
+        file->addSeparator();
+        file->addActions({save,saveas,close,closeall});
+        file->addSeparator();
+        file->addAction(prefer);
+        file->addSeparator();
+        file->addAction(quit);
 
-    auto *view = new ElaMenu(tr("View"),this);
-    auto *zoomin = new ElaMenu(tr("Zoom In"),view);
-    auto *zoomout = new ElaMenu(tr("Zoom Out"),view);
-    auto *fullscreen = new ElaMenu(tr("Full Screen"),view);
-    view->addMenu(zoomin);
-    view->addMenu(zoomout);
-    view->addMenu(fullscreen);
-    this->addMenu(view);
+    auto *edit = new ElaMenu(tr("Edit(&E)"),this);
+        auto *undo = edit->addElaIconAction(ElaIconType::ArrowRotateLeft, tr("Undo"), QKeySequence::Undo);
+        auto *redo = edit->addElaIconAction(ElaIconType::ArrowRotateRight, tr("Redo"), QKeySequence::Redo);
+        auto *cut = edit->addElaIconAction(ElaIconType::Scissors, tr("Cut"), QKeySequence::Cut);
+        auto *copy = edit->addElaIconAction(ElaIconType::Copy, tr("Copy"), QKeySequence::Copy);
+        auto *paste = edit->addElaIconAction(ElaIconType::Clipboard, tr("Paste"), QKeySequence::Paste);
+        auto *selectall = edit->addElaIconAction(ElaIconType::Tick, tr("Select All"), QKeySequence::SelectAll);
 
-    auto *help = new ElaMenu(tr("Help"),this);
-    auto *about = new ElaMenu(tr("About"),help);
-    help->addMenu(about);
-    this->addMenu(help);
+        edit->addActions({undo,redo});
+        edit->addSeparator();
+        edit->addActions({cut,copy,paste,selectall});
+        edit->addSeparator();
+
+    auto *view = new ElaMenu(tr("View(&V)"), this);
+        auto *pjview = project_dock->toggleViewAction();
+            pjview->setCheckable(true);
+        auto *clview = class_dock->toggleViewAction();
+            clview->setCheckable(true);
+
+    view->addAction(pjview);
+    view->addAction(clview);
+
+    addMenu(file);
+    addMenu(edit);
+    addMenu(view);
+
 }
