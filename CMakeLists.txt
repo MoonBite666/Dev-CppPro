@@ -12,12 +12,15 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 find_package(QT NAMES Qt6 Qt5 REQUIRED COMPONENTS Widgets LinguistTools)
 find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools)
 
-set(TS_FILES DevCppPro_zh_CN.ts)
+set(TS_FILES TSDir/DevCppPro_zh_CN.ts)
+add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
+
+include_directories(UI)
 
 set(PROJECT_SOURCES
-        main.cpp
-        dcmainwindow.cpp
-        dcmainwindow.h
+        Src/main.cpp
+        UI/dcmainwindow.cpp
+        UI/dcmainwindow.h
         ${TS_FILES}
 )
 
@@ -25,6 +28,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
     qt_add_executable(DevCppPro
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
+        ThirdParty/ElaWidgetTools/src/include/ElaWidgetTools.qrc
     )
 # Define target properties for Android with Qt 6 as:
 #    set_property(TARGET DevCppPro APPEND PROPERTY QT_ANDROID_PACKAGE_SOURCE_DIR
@@ -48,7 +52,10 @@ else()
     qt5_create_translation(QM_FILES ${CMAKE_SOURCE_DIR} ${TS_FILES})
 endif()
 
-target_link_libraries(DevCppPro PRIVATE Qt${QT_VERSION_MAJOR}::Widgets)
+add_subdirectory(ThirdParty/ElaWidgetTools)
+include_directories(ThirdParty/ElaWidgetTools/src/include)
+
+target_link_libraries(DevCppPro PRIVATE Qt${QT_VERSION_MAJOR}::Widgets elawidgettools)
 
 # Qt for iOS sets MACOSX_BUNDLE_GUI_IDENTIFIER automatically since Qt 6.1.
 # If you are developing for iOS or macOS you should consider setting an
