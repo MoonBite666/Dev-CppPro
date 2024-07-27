@@ -17,11 +17,20 @@ add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 
 include_directories(UI)
 
+
 set(PROJECT_SOURCES
         Src/main.cpp
+        UI/dw_projectdock.cpp
+        UI/dw_projectdock.h
         UI/dcmainwindow.cpp
         UI/dcmainwindow.h
         ${TS_FILES}
+        UI/initwindow.cpp
+        UI/initwindow.h
+        UI/dw_classdock.cpp
+        UI/dw_classdock.h
+        UI/dcmenubar.cpp
+        UI/dcmenubar.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

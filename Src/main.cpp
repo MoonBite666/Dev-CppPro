@@ -1,10 +1,12 @@
 #include "dcmainwindow.h"
+#include "initwindow.h"
 
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
 
 #include "ElaApplication.h"
+
 
 int main(int argc, char *argv[])
 {
@@ -21,5 +23,7 @@ int main(int argc, char *argv[])
     }
     DCMainWindow w;
     w.show();
+    InitWindow i;
+    i.show();
     return a.exec();
 }
