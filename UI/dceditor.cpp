@@ -9,11 +9,11 @@ DCEditor::DCEditor(QWidget* parent)
     : ElaScrollPage(parent)
 {
     _tabWidget = new ElaTabWidget(this);
-    auto *page1 = new QTextEdit(this);
-    auto font = page1->font();
-    font.setPointSize(20);
-    page1->setFont(font);
-    _tabWidget->addTab(page1,"新标签页1");
+    // auto *page1 = new QTextEdit(this);
+    // auto font = page1->font();
+    // font.setPointSize(20);
+    // page1->setFont(font);
+    // _tabWidget->addTab(page1,"新标签页1");
 
 
     auto *centralWidget = new QWidget(this);

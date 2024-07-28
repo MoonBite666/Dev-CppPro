@@ -3,6 +3,7 @@
 #include "ElaMenu.h"
 #include "ElaToolButton.h"
 #include <QAction>
+#include <QFileDialog>
 
 
 
@@ -57,4 +58,13 @@ DCMenuBar::DCMenuBar(QWidget* parent, const QList <ElaDockWidget*>& dockList): E
     addMenu(edit);
     addMenu(view);
 
+    connect(newfile, &QAction::triggered, this, [this]() {
+        QString fileName = QFileDialog::getOpenFileName(
+            nullptr,
+            tr("Open File"),
+            "",
+            tr("All Files (*)"));
+        emit fileNewTriggerd(fileName);
+    });
 }
+

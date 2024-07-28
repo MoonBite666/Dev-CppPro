@@ -7,11 +7,11 @@
 #include "ElaDockWidget.h"
 
 
-class ToolDock : public ElaDockWidget {
+class DCToolDock : public ElaDockWidget {
     Q_OBJECT
 public:
-    ToolDock(QWidget* parent = nullptr);
-    ~ToolDock() = default;
+    explicit DCToolDock(QWidget* parent = nullptr);
+    ~DCToolDock() override = default;
 };
 
 

@@ -8,6 +8,8 @@
 #include "dceditor.h"
 #include "dcstatus.h"
 #include "dw_tooldock.h"
+#include "FileManager/dcfilecontroller.h"
+
 
 
 DCMainWindow::DCMainWindow(QWidget* parent): ElaWindow(parent)
@@ -29,15 +31,22 @@ DCMainWindow::DCMainWindow(QWidget* parent): ElaWindow(parent)
     this->addDockWidget(Qt::LeftDockWidgetArea,classdock);
     resizeDocks({classdock}, {400}, Qt::Vertical);
     resizeDocks({classdock}, {200}, Qt::Horizontal);
-    auto *tooldock = new ToolDock(this);
-    this->addDockWidget(Qt::TopDockWidgetArea,tooldock);
-    resizeDocks({tooldock}, {30}, Qt::Vertical);
+    _tooldock = new DCToolDock(this);
+    this->addDockWidget(Qt::TopDockWidgetArea,_tooldock);
+    resizeDocks({_tooldock}, {30}, Qt::Vertical);
     // resizeDocks({tooldock}, {30}, Qt::Horizontal);
 
-    auto *menubar = new DCMenuBar(this,{projectdock,classdock,tooldock});
-    setMenuBar(menubar);
+    _menubar = new DCMenuBar(this,{projectdock,classdock,_tooldock});
+    setMenuBar(_menubar);
+
 
     auto *statusbar = new DCStatus(this);
     setStatusBar(statusbar);
+
+    _file_controller = new DCFileController(this, nullptr, this);
+
+    connect(_menubar, &DCMenuBar::fileNewTriggerd, this, [this](QString filename){
+        emit fileNewTriggerd(filename);
+    });
 
 }

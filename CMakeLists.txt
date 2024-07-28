@@ -17,26 +17,16 @@ add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 
 include_directories(UI)
 
+file(GLOB UI_FILES "UI/*.cpp" "UI/*.h")
+file(GLOB SRC_FILES "Src/main.cpp" "Src/FileManager/*.cpp" "Src/FileManager/*.h")
+
 
 set(PROJECT_SOURCES
-        Src/main.cpp
-        UI/dw_projectdock.cpp
-        UI/dw_projectdock.h
-        UI/dcmainwindow.cpp
-        UI/dcmainwindow.h
+        ${SRC_FILES}
+        ${UI_FILES}
         ${TS_FILES}
-        UI/initwindow.cpp
-        UI/initwindow.h
-        UI/dw_classdock.cpp
-        UI/dw_classdock.h
-        UI/dcmenubar.cpp
-        UI/dcmenubar.h
-        UI/dceditor.cpp
-        UI/dceditor.h
-        UI/dcstatus.cpp
-        UI/dcstatus.h
-        UI/dw_tooldock.cpp
-        UI/dw_tooldock.h
+        Src/FileManager/dcfilecontroller.cpp
+        Src/FileManager/dcfilecontroller.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
@@ -69,6 +59,7 @@ endif()
 
 add_subdirectory(ThirdParty/ElaWidgetTools)
 include_directories(ThirdParty/ElaWidgetTools/src/include)
+include_directories(Src)
 
 target_link_libraries(DevCppPro PRIVATE Qt${QT_VERSION_MAJOR}::Widgets elawidgettools)
 
