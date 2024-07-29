@@ -4,6 +4,7 @@
 #include "ElaWindow.h"
 
 
+class DCEditor;
 class DCFileController;
 class DCToolDock;
 class DCMenuBar;
@@ -22,6 +23,14 @@ public:
 private:
     DCMenuBar* _menubar = nullptr;
     DCToolDock* _tooldock = nullptr;
+    DCEditor *_editor = nullptr;
+
+public:
+    DCEditor * editor()  {
+        return _editor;
+    }
+
+private:
     DCFileController* _file_controller = nullptr;
 
 };

@@ -27,6 +27,8 @@ set(PROJECT_SOURCES
         ${TS_FILES}
         Src/FileManager/dcfilecontroller.cpp
         Src/FileManager/dcfilecontroller.h
+        UI/DCFileEdit.cpp
+        UI/DCFileEdit.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

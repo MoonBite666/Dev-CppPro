@@ -6,12 +6,17 @@
 #define DCEDITOR_H
 #include "ElaScrollPage.h"
 
+class QFile;
 class ElaTabWidget;
 class DCEditor : public ElaScrollPage{
     Q_OBJECT
 public:
     DCEditor(QWidget* parent = nullptr);
     ~DCEditor() = default;
+public slots:
+    void addTab(QFile* tabFile);
+
+
 private:
     ElaTabWidget *_tabWidget;
 };

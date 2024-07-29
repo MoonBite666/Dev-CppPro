@@ -20,8 +20,8 @@ DCMainWindow::DCMainWindow(QWidget* parent): ElaWindow(parent)
     // moveToCenter();
 
 
-    auto *editor = new DCEditor(this);
-    addPageNode("EDITOR", editor, ElaIconType::House);
+    _editor = new DCEditor(this);
+    addPageNode("EDITOR", _editor, ElaIconType::House);
 
     auto *projectdock = new ProjectDock(this);
     this->addDockWidget(Qt::LeftDockWidgetArea,projectdock);
