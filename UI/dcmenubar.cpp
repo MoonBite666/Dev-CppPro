@@ -59,11 +59,12 @@ DCMenuBar::DCMenuBar(QWidget* parent, const QList <ElaDockWidget*>& dockList): E
     addMenu(view);
 
     connect(newfile, &QAction::triggered, this, [this]() {
-        QString fileName = QFileDialog::getOpenFileName(
-            nullptr,
-            tr("Open File"),
-            "",
-            tr("All Files (*)"));
+        QString fileName = QFileDialog::getSaveFileName(
+            this,
+            tr("New File"),
+            QDir::homePath(),
+            tr("C++ Files (*.cpp *.h *.hpp);;All Files (*)")
+        );
         emit fileNewTriggerd(fileName);
     });
 }
