@@ -1,7 +1,9 @@
 #include "dceditor.h"
+#include "DCFileEdit.h"
+
 #include <QHBoxLayout>
 #include <QFile>
-#include <DCFileEdit.h>
+#include <QPainter>
 #include "ElaTabWidget.h"
 
 DCEditor::DCEditor(QWidget* parent)
@@ -12,12 +14,16 @@ DCEditor::DCEditor(QWidget* parent)
     auto *layout = new QVBoxLayout(centralWidget);
     layout->setContentsMargins(0, 0, 0, 0);
     layout->addWidget(_tabWidget);
-    addCentralWidget(centralWidget, true, true, 0);
+    addCentralWidget(centralWidget, true, false, 0);
     setTitleVisible(false);
+}
+
+QString removeFilePath(QString path) {
+    path.remove(0, path.lastIndexOf('/') + 1);
+    return path;
 }
 
 void DCEditor::addTab(QFile* tabFile) {
     auto *page = new DCFileEdit(this, tabFile);
-    _tabWidget->addTab(page, tabFile->fileName());
-
+    _tabWidget->addTab(page, removeFilePath(tabFile->fileName()));
 }
