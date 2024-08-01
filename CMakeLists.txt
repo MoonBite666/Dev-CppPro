@@ -18,17 +18,15 @@ add_compile_options("$<$<CXX_COMPILER_ID:MSVC>:/utf-8>")
 include_directories(UI)
 
 file(GLOB UI_FILES "UI/*.cpp" "UI/*.h")
-file(GLOB SRC_FILES "Src/main.cpp" "Src/FileManager/*.cpp" "Src/FileManager/*.h")
+file(GLOB SRC_FILES "Src/main.cpp" "Src/FileManager/*.cpp" "Src/FileManager/*.h"
+    "Src/TextManager/*.cpp" "Src/TextManager/*.h"
+)
 
 
 set(PROJECT_SOURCES
         ${SRC_FILES}
         ${UI_FILES}
         ${TS_FILES}
-        Src/FileManager/dcfilecontroller.cpp
-        Src/FileManager/dcfilecontroller.h
-        UI/DCFileEdit.cpp
-        UI/DCFileEdit.h
 )
 
 if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)

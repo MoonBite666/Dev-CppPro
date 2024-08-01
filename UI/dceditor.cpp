@@ -1,5 +1,5 @@
 #include "dceditor.h"
-#include "DCFileEdit.h"
+#include "TextManager/DCTextEdit.h"
 
 #include <QHBoxLayout>
 #include <QFile>
@@ -7,8 +7,9 @@
 #include "ElaTabWidget.h"
 
 DCEditor::DCEditor(QWidget* parent)
-    : ElaScrollPage(parent)
+    : ElaScrollPage(parent,false)
 {
+    setContentsMargins(0,0,0,0);
     _tabWidget = new ElaTabWidget(this);
     auto *centralWidget = new QWidget(this);
     auto *layout = new QVBoxLayout(centralWidget);
@@ -24,6 +25,6 @@ QString removeFilePath(QString path) {
 }
 
 void DCEditor::addTab(QFile* tabFile) {
-    auto *page = new DCFileEdit(this, tabFile);
+    auto *page = new DCTextEdit(this, tabFile);
     _tabWidget->addTab(page, removeFilePath(tabFile->fileName()));
 }
