@@ -19,7 +19,6 @@ DCEditor::DCEditor(QWidget* parent)
     layout->addWidget(_tabWidget);
     addCentralWidget(centralWidget, true, false, 0);
     setTitleVisible(false);
-    connect(_tabWidget, &ElaTabWidget::)
 
     _font_manager = new DCFontManager(this);
 }

@@ -27,6 +27,7 @@ private:
     {
         QRegularExpression pattern;
         QTextCharFormat format;
+        QString formatName;
     };
     QVector<HighlightingRule> highlightingRules;
 
@@ -41,8 +42,10 @@ private:
     QTextCharFormat functionFormat;
     DCFontManager *_font_manager;
     QMap<QString, QColor> *_highlightColorMap;
+    ElaThemeType::ThemeMode _themeMode;
+    QString _current;
 private slots:
-    // void onThemeChange(ElaThemeType::ThemeMode themeMode);
+    void onThemeChange(ElaThemeType::ThemeMode themeMode);
 };
 
 
