@@ -6,6 +6,7 @@
 #define DCEDITOR_H
 #include "ElaScrollPage.h"
 
+class DCFontManager;
 class QFile;
 class ElaTabWidget;
 class DCEditor : public ElaScrollPage{
@@ -19,6 +20,7 @@ public slots:
 
 private:
     ElaTabWidget *_tabWidget;
+    DCFontManager *_font_manager;
 };
 
 

@@ -6,12 +6,13 @@
 #include "ElaTextEdit.h"
 #include "ElaTheme.h"
 #include "DCLineNumberArea.h"
+#include "DCFontManager.h"
 
 
 
-DCTextEdit::DCTextEdit(QWidget *parent, QFile *file)
+DCTextEdit::DCTextEdit(QWidget *parent, QFile *file, DCFontManager *font_manager)
     : ElaTextEdit(parent),
-      _file(file) {
+      _file(file), _font_manager(font_manager) {
     setContentsMargins(0,0,0,0);
     _lineNumberArea = new DCLineNumberArea(this);
     _themeMode = eTheme->getThemeMode();
@@ -21,6 +22,7 @@ DCTextEdit::DCTextEdit(QWidget *parent, QFile *file)
     connect(this, &DCTextEdit::updateRequest, this, &DCTextEdit::updateLineNumberArea);
     connect(this, &DCTextEdit::cursorPositionChanged, this, &DCTextEdit::highlightCurrentLine);
     updateLineNumberAreaWidth(0);
+    setFont(_font_manager->normal_font());
     highlightCurrentLine();
 }
 
@@ -47,7 +49,7 @@ void DCTextEdit::lineNumberAreaPaintEvent(QPaintEvent *event) {
     QPainter painter(_lineNumberArea);
     painter.fillRect(event->rect(), _lineNumberArea->palette().window().color());
     auto font = painter.font();
-    font.setPointSize(15);
+    font.setPointSize(this->font().pointSize() - 1);
     painter.setFont(font);
     auto block = firstVisibleBlock();
     int blockNumber = block.blockNumber();
@@ -58,7 +60,7 @@ void DCTextEdit::lineNumberAreaPaintEvent(QPaintEvent *event) {
         if(block.isVisible() && bottom >= event->rect().top()) {
             QString number = QString::number(blockNumber + 1);
             painter.setPen(_lineNumberArea->palette().text().color());
-            painter.drawText(0, top+8, _lineNumberArea->width(), fontMetrics().height(), Qt::AlignRight, number);
+            painter.drawText(0, top+this->font().pointSize()/4, _lineNumberArea->width(), fontMetrics().height(), Qt::AlignRight, number);
         }
         block = block.next();
         top = bottom;

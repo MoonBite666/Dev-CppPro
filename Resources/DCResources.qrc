@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/">
+        <file>Fonts/MesloLGS NF Regular.ttf</file>
+        <file>Fonts/MesloLGS NF Italic.ttf</file>
+        <file>Fonts/MesloLGS NF Bold.ttf</file>
+        <file>Fonts/MesloLGS NF Bold Italic.ttf</file>
+    </qresource>
+</RCC>
