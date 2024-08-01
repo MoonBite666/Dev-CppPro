@@ -23,12 +23,12 @@ void DCLineNumberArea::onThemeChange(ElaThemeType::ThemeMode themeMode) {
     if (themeMode == ElaThemeType::Light)
     {
         palette.setColor(QPalette::Text, QColor::fromString("#495057").lighter(200));
-        palette.setColor(QPalette::Window, QColor::fromString("#aed9e0"));
+        palette.setColor(QPalette::Window, QColor::fromString("#f3f2f9"));
     }
     else
     {
         palette.setColor(QPalette::Text, QColor::fromString("#ced4da").darker());
-        palette.setColor(QPalette::Window, QColor::fromString("#33415c"));
+        palette.setColor(QPalette::Window, QColor::fromString("#282c3a"));
     }
     this->setPalette(palette);
 

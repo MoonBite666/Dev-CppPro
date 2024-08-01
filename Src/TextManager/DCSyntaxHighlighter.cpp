@@ -28,7 +28,14 @@ DCSyntaxHighlighter::DCSyntaxHighlighter(QTextDocument *parent, DCFontManager *f
         QStringLiteral("\\bslots\\b"), QStringLiteral("\\bstatic\\b"), QStringLiteral("\\bstruct\\b"),
         QStringLiteral("\\btemplate\\b"), QStringLiteral("\\btypedef\\b"), QStringLiteral("\\btypename\\b"),
         QStringLiteral("\\bunion\\b"), QStringLiteral("\\bunsigned\\b"), QStringLiteral("\\bvirtual\\b"),
-        QStringLiteral("\\bvoid\\b"), QStringLiteral("\\bvolatile\\b"), QStringLiteral("\\bbool\\b")
+        QStringLiteral("\\bvoid\\b"), QStringLiteral("\\bvolatile\\b"), QStringLiteral("\\bbool\\b"),
+        QStringLiteral("\\breturn\\b"), QStringLiteral("\\bif\\b"), QStringLiteral("\\belse\\b"),
+        QStringLiteral("\\bfor\\b"), QStringLiteral("\\bwhile\\b"), QStringLiteral("\\bdo\\b"),
+        QStringLiteral("\\bcontinue\\b"), QStringLiteral("\\bbreak\\b"), QStringLiteral("\\bcase\\b"),
+        QStringLiteral("\\bswitch\\b"), QStringLiteral("\\bdefault\\b"), QStringLiteral("\\btry\\b"),
+        QStringLiteral("\\bcatch\\b"), QStringLiteral("\\bthrow\\b"), QStringLiteral("\\bdelete\\b"),
+        QStringLiteral("\\bnew\\b"), QStringLiteral("\\bthis\\b"), QStringLiteral("\\busing\\b"),
+        QStringLiteral("\\btrue\\b"), QStringLiteral("\\bfalse\\b"), QStringLiteral("\\bnullptr\\b"),
     };
     for (const QString &pattern : keywordPatterns) {
         rule.pattern = QRegularExpression(pattern);
@@ -56,17 +63,46 @@ DCSyntaxHighlighter::DCSyntaxHighlighter(QTextDocument *parent, DCFontManager *f
     rule.formatName = "Comment";
     highlightingRules.append(rule);
 
-    quotationFormat.setFont(_font_manager->normal_font());
+    stringFormat.setFont(_font_manager->normal_font());
     rule.pattern = QRegularExpression(QStringLiteral("\".*\""));
-    rule.format = quotationFormat;
+    rule.format = stringFormat;
     rule.formatName = "String";
     highlightingRules.append(rule);
 
     functionFormat.setFont(_font_manager->normal_font());
-    functionFormat.setForeground(_highlightColorMap->value("Function"));
     rule.pattern = QRegularExpression(QStringLiteral("\\b[A-Za-z0-9_]+(?=\\()"));
     rule.format = functionFormat;
     rule.formatName = "Function";
+    highlightingRules.append(rule);
+
+    globalVarFormat.setFont(_font_manager->normal_font());
+    rule.pattern = QRegularExpression(QStringLiteral("\\b[A-Za-z0-9_]+(?=\\s*[=;])"));
+    rule.format = globalVarFormat;
+    rule.formatName = "GlobalVar";
+    highlightingRules.append(rule);
+
+    numberFormat.setFont(_font_manager->normal_font());
+    rule.pattern = QRegularExpression(QStringLiteral("\\b[0-9]+\\b"));
+    rule.format = numberFormat;
+    rule.formatName = "Number";
+    highlightingRules.append(rule);
+
+    escapeSequenceFormat.setFont(_font_manager->normal_font());
+    rule.pattern = QRegularExpression(QStringLiteral("\\\\[a-zA-Z0-9]+"));
+    rule.format = escapeSequenceFormat;
+    rule.formatName = "EscapeSequence";
+    highlightingRules.append(rule);
+
+    preprocessorFormat.setFont(_font_manager->italic_font());
+    rule.pattern = QRegularExpression(QStringLiteral("#[a-zA-Z0-9]+"));
+    rule.format = preprocessorFormat;
+    rule.formatName = "Preprocessor";
+    highlightingRules.append(rule);
+
+    headerPathFormat.setFont(_font_manager->normal_font());
+    rule.pattern = QRegularExpression(QStringLiteral("<[a-zA-Z0-9]+>"));
+    rule.format = headerPathFormat;
+    rule.formatName = "HeaderPath";
     highlightingRules.append(rule);
 
     commentStartExpression = QRegularExpression(QStringLiteral(" /\\*"));
@@ -119,7 +155,7 @@ void DCSyntaxHighlighter::onThemeChange(ElaThemeType::ThemeMode themeMode) {
         _highlightColorMap->insert("Namespace", QColor::fromString("#008080"));
         _highlightColorMap->insert("OperatorOverride", QColor::fromString("#008080"));
         _highlightColorMap->insert("StringArgFormat", QColor::fromString("#000080"));
-        // quotationFormat.setForeground(QColor::fromString("#00733b"));
+        // stringFormat.setForeground(QColor::fromString("#00733b"));
         _highlightColorMap->insert("String", QColor::fromString("#00733b"));
         _highlightColorMap->insert("EscapeSequence", QColor::fromString("#008000"));
         _highlightColorMap->insert("Macro", QColor::fromString("#1f542e"));
@@ -148,7 +184,7 @@ void DCSyntaxHighlighter::onThemeChange(ElaThemeType::ThemeMode themeMode) {
         _highlightColorMap->insert("Namespace", QColor::fromString("#e5c07b"));
         _highlightColorMap->insert("OperatorOverride", QColor::fromString("#008080"));
         _highlightColorMap->insert("StringArgFormat", QColor::fromString("#2bbac5"));
-        // quotationFormat.setForeground(QColor::fromString("#89ca78"));
+        // stringFormat.setForeground(QColor::fromString("#89ca78"));
         _highlightColorMap->insert("String", QColor::fromString("#89ca78"));
         _highlightColorMap->insert("EscapeSequence", QColor::fromString("#008000"));
         _highlightColorMap->insert("Macro", QColor::fromString("#ef596f"));

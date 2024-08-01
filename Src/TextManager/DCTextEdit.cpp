@@ -60,7 +60,7 @@ void DCTextEdit::lineNumberAreaPaintEvent(QPaintEvent *event) {
         if(block.isVisible() && bottom >= event->rect().top()) {
             QString number = QString::number(blockNumber + 1);
             painter.setPen(_lineNumberArea->palette().text().color());
-            painter.drawText(0, top+this->font().pointSize()/4, _lineNumberArea->width(), fontMetrics().height(), Qt::AlignRight, number);
+            painter.drawText(0, top+this->font().pointSize()/6, _lineNumberArea->width(), fontMetrics().height(), Qt::AlignRight, number);
         }
         block = block.next();
         top = bottom;

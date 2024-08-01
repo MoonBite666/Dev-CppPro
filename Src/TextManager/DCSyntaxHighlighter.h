@@ -38,8 +38,17 @@ private:
     QTextCharFormat classFormat;
     QTextCharFormat singleLineCommentFormat;
     QTextCharFormat multiLineCommentFormat;
-    QTextCharFormat quotationFormat;
     QTextCharFormat functionFormat;
+    QTextCharFormat globalVarFormat;
+    QTextCharFormat localVarFotmat;
+    QTextCharFormat escapeSequenceFormat;
+    QTextCharFormat numberFormat;
+    QTextCharFormat stringFormat;
+    QTextCharFormat preprocessorFormat;
+    QTextCharFormat headerPathFormat;
+    QTextCharFormat macroFormat;
+
+
     DCFontManager *_font_manager;
     QMap<QString, QColor> *_highlightColorMap;
     ElaThemeType::ThemeMode _themeMode;
